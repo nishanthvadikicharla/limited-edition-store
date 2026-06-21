@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import { ArrowUpRight, ArrowRight, Minus } from "lucide-react";
+import RefarmsoilChatbot from "@/components/RefarmsoilChatbot";
 
 /* ─── tiny helpers ─── */
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -881,6 +882,8 @@ export default function Home() {
           onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = ""; }}>
           💬
         </a>
+        <RefarmsoilChatbot />
+
 
       </main>
     </>

@@ -1,9 +1,17 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Star, ShieldCheck } from "lucide-react";
+import { Star, ShieldCheck, ArrowUpRight } from "lucide-react";
 
-const reviews = [
+interface Review {
+  name: string;
+  title: string;
+  date: string;
+  rating: number;
+  text: string;
+}
+
+const REVIEWS: Review[] = [
   {
     name: "Ravindra",
     title: "Delightful, mindful sweetener",
@@ -48,112 +56,97 @@ const reviews = [
   },
 ];
 
+const AMAZON_URL =
+  "https://www.amazon.in/Refarmsoil-Millet-Us-Worlds-Sweetener-Glycemic/dp/B0GZFDLNVP";
+
 export default function Reviews() {
   return (
-    <section
-      id="reviews"
-      className="relative overflow-hidden bg-white py-32"
-    >
-      <div className="absolute -right-40 top-10 h-[420px] w-[420px] rounded-full bg-green-100 blur-[170px]" />
-      <div className="absolute left-0 bottom-0 h-[400px] w-[400px] rounded-full bg-yellow-100 blur-[180px]" />
-
-      <div className="relative mx-auto max-w-7xl px-6">
-        {/* Heading */}
+    <section id="reviews" className="bg-[#FAF9F6] py-24 text-[#142018]">
+      <div className="mx-auto max-w-6xl px-6">
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center"
+          transition={{ duration: 0.6 }}
+          className="flex flex-col items-center text-center"
         >
-          <p className="text-sm font-semibold uppercase tracking-[0.35em] text-[#2F6F47]">
-            CUSTOMER VOICES
-          </p>
+          <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#96783E]">
+            Customer Voices
+          </span>
 
-          <h2 className="mt-5 text-5xl font-bold leading-tight text-[#183323] md:text-6xl">
-            Loved by Real
-            <br />
-            Amazon Customers
+          <h2 className="mt-3 font-serif text-3xl font-medium tracking-tight sm:text-4xl">
+            Loved by Amazon Customers
           </h2>
 
-          <div className="mx-auto mt-6 h-1 w-28 rounded-full bg-[#C8A95C]" />
-
-          <div className="mt-8 flex items-center justify-center gap-2">
-            <div className="flex">
+          <div className="mt-4 flex items-center gap-2 text-xs text-[#6D776F]">
+            <div className="flex text-[#D5B66B]">
               {[...Array(5)].map((_, i) => (
-                <Star
-                  key={i}
-                  className="h-5 w-5 fill-[#C8A95C] text-[#C8A95C]"
-                />
+                <Star key={i} className="h-3.5 w-3.5 fill-current" />
               ))}
             </div>
-            <span className="text-lg font-semibold text-[#183323]">
-              5.0 out of 5
-            </span>
-            <span className="text-gray-500">· Verified Purchases</span>
+            <span className="font-semibold text-[#142018]">5.0 / 5.0</span>
+            <span>•</span>
+            <span>Verified Purchases</span>
           </div>
         </motion.div>
 
-        {/* Cards */}
-        <div className="mt-16 grid grid-cols-2 gap-5 sm:grid-cols-3 md:gap-6">
-          {reviews.map((review, index) => (
-            <motion.div
+        {/* Reviews Grid */}
+        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {REVIEWS.map((review, index) => (
+            <motion.article
               key={review.name + index}
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{
-                delay: index * 0.08,
-                duration: 0.5,
-              }}
-              whileHover={{ y: -6, scale: 1.02 }}
-              className="group flex flex-col rounded-2xl border border-[#E7E2D5] bg-white p-4 shadow-md transition-all"
+              transition={{ delay: index * 0.05, duration: 0.5 }}
+              className="group flex flex-col justify-between rounded-xl border border-[rgba(20,32,24,0.08)] bg-white p-5 shadow-sm transition-all duration-300 hover:border-[#D5B66B]/40 hover:shadow-md"
             >
-              <div className="flex items-center justify-between">
-                <div className="flex">
-                  {[...Array(review.rating)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className="h-3 w-3 fill-[#C8A95C] text-[#C8A95C]"
-                    />
-                  ))}
+              <div>
+                <div className="flex items-center justify-between">
+                  <div className="flex text-[#D5B66B]">
+                    {[...Array(review.rating)].map((_, i) => (
+                      <Star key={i} className="h-3 w-3 fill-current" />
+                    ))}
+                  </div>
+                  <ShieldCheck className="h-3.5 w-3.5 text-[#143B27]" />
                 </div>
-                <ShieldCheck className="h-3.5 w-3.5 text-[#2F6F47]" />
+
+                <h3 className="mt-3 text-sm font-semibold tracking-tight text-[#142018]">
+                  {review.title}
+                </h3>
+
+                <p className="mt-2 line-clamp-4 text-xs leading-relaxed text-[#6D776F]">
+                  "{review.text}"
+                </p>
               </div>
 
-              <h3 className="mt-3 text-sm font-bold leading-snug text-[#183323]">
-                {review.title}
-              </h3>
-
-              <p className="mt-2 line-clamp-3 flex-1 text-xs leading-5 text-gray-600">
-                {review.text}
-              </p>
-
-              <div className="mt-3 flex items-center justify-between border-t border-[#E7E2D5] pt-2 text-[10px] text-gray-500">
-                <span className="font-semibold text-[#183323]">
+              <div className="mt-5 flex items-center justify-between border-t border-[rgba(20,32,24,0.06)] pt-3 text-[10px]">
+                <span className="font-medium text-[#142018]">
                   {review.name}
                 </span>
-                <span>{review.date}</span>
+                <span className="text-[#6D776F]">{review.date}</span>
               </div>
-            </motion.div>
+            </motion.article>
           ))}
         </div>
 
         {/* CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-14 text-center"
+          transition={{ delay: 0.2 }}
+          className="mt-12 text-center"
         >
           <a
-            href="https://www.amazon.in/Refarmsoil-Millet-Us-Worlds-Sweetener-Glycemic/dp/B0GZFDLNVP"
+            href={AMAZON_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-[#183323] px-8 py-4 text-sm font-semibold uppercase tracking-widest text-white transition-all hover:bg-[#2F6F47]"
+            className="inline-flex items-center gap-1.5 rounded-full bg-[#071A11] px-6 py-3 text-[11px] font-bold uppercase tracking-widest text-white transition-all hover:bg-[#143B27]"
           >
             Read All Reviews on Amazon
+            <ArrowUpRight className="h-3.5 w-3.5" />
           </a>
         </motion.div>
       </div>

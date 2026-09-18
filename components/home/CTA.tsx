@@ -2,158 +2,145 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowRight, Leaf, Heart, Wheat, Mail, MessageCircle } from "lucide-react";
+import { Check, ArrowUpRight, Sparkles, Shield, Leaf } from "lucide-react";
 
-// TODO: replace with your actual WhatsApp business number (with country code, no + or spaces)
-const WHATSAPP_NUMBER = "918309607310";
-const WHATSAPP_MESSAGE = "Hi! I'm interested in Millet-Us and would like to know more.";
-const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-  WHATSAPP_MESSAGE
-)}`;
+interface ProductFeature {
+  title: string;
+  description: string;
+}
 
-const AMAZON_LINK =
+const FEATURES: ProductFeature[] = [
+  {
+    title: "Low Glycemic Index",
+    description: "Designed for balanced wellness and daily sugar-smart lifestyles.",
+  },
+  {
+    title: "100% Millet-Derived",
+    description: "Extracted naturally from sustainably farmed, climate-resilient grains.",
+  },
+  {
+    title: "Zero Refined Sugar",
+    description: "Clean taste profile free from artificial additives or synthetic sweeteners.",
+  },
+  {
+    title: "Seamless 1:1 Use",
+    description: "Blends and sweetens smoothly across beverages, cooking, and baking.",
+  },
+];
+
+const AMAZON_URL =
   "https://www.amazon.in/Refarmsoil-Millet-Us-Worlds-Sweetener-Glycemic/dp/B0GZFDLNVP";
 
-// TODO: replace with your real business email
-const CONTACT_EMAIL = "business@refarmsoil.com";
-
-export default function CTA() {
+export default function Product() {
   return (
-    <section id="contact" className="relative overflow-hidden bg-[#F8F6EF] py-32">
-      {/* Background Blobs */}
-      <div className="absolute -left-40 top-20 h-[450px] w-[450px] rounded-full bg-green-100 blur-[180px]" />
-      <div className="absolute -right-32 bottom-0 h-[420px] w-[420px] rounded-full bg-yellow-100 blur-[170px]" />
-
-      <div className="relative mx-auto flex max-w-7xl flex-col-reverse items-center gap-20 px-6 lg:flex-row">
-        {/* LEFT */}
-        <motion.div
-          initial={{ opacity: 0, x: -70 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="flex-1"
-        >
-          <span className="rounded-full bg-green-100 px-5 py-2 text-sm font-semibold tracking-widest text-[#1F5E3B]">
-            READY TO EXPERIENCE
-          </span>
-
-          <h2 className="mt-8 text-5xl font-bold leading-tight text-[#183323] lg:text-6xl">
-            The Future
-            <br />
-            of Sweetness.
-          </h2>
-
-          <p className="mt-8 max-w-xl text-lg leading-8 text-gray-600">
-            Choose a healthier way to sweeten your everyday life without
-            compromising on taste.
-          </p>
-
-          <div className="mt-10 space-y-5">
-            <div className="flex items-center gap-3">
-              <Leaf className="text-green-700" />
-              <span className="text-lg">Powered by Millets</span>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <Heart className="text-green-700" />
-              <span className="text-lg">Proudly Made in Bharat 🇮🇳</span>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <Wheat className="text-green-700" />
-              <span className="text-lg">Climate Smart Food Innovation</span>
-            </div>
-          </div>
-
-          <div className="mt-12 flex flex-wrap gap-5">
-            <a
-              href={AMAZON_LINK}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group rounded-full bg-[#1F5E3B] px-8 py-4 font-semibold text-white transition-all hover:scale-105 hover:bg-[#153F2A]"
-            >
-              Buy Millet-Us
-              <ArrowRight className="ml-2 inline transition group-hover:translate-x-1" />
-            </a>
-
-            <a
-              href={`mailto:${CONTACT_EMAIL}`}
-              className="group flex items-center gap-3 rounded-full border border-[#1F5E3B] px-8 py-4 font-semibold text-[#1F5E3B] transition-all hover:bg-[#1F5E3B] hover:text-white"
-            >
-              <Mail size={18} />
-              Contact Us
-            </a>
-
-            <a
-              href={WHATSAPP_LINK}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center gap-3 rounded-full bg-[#25D366] px-8 py-4 font-semibold text-white transition-all hover:scale-105 hover:bg-[#1EBE57]"
-            >
-              <MessageCircle size={18} />
-              WhatsApp Us
-            </a>
-          </div>
-        </motion.div>
-
-        {/* RIGHT */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="relative flex flex-1 justify-center"
-        >
-          {/* Glow */}
-          <div className="absolute h-[420px] w-[420px] rounded-full bg-green-200 blur-[120px]" />
-
-          {/* Floating Bottle */}
+    <section
+      id="products"
+      className="bg-[#FAF9F6] py-20 text-[#142018] sm:py-28"
+    >
+      <div className="mx-auto max-w-6xl px-5 sm:px-6">
+        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
+          
+          {/* LEFT: BOTTLE SHOWCASE (5 COLS) */}
           <motion.div
-            animate={{ y: [0, -18, 0] }}
-            transition={{ repeat: Infinity, duration: 4 }}
-            className="relative"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="relative lg:col-span-5 flex flex-col items-center"
           >
-            <Image
-              src="/images/hero/millet-us-bottle.png"
-              alt="Millet-Us Sweetener"
-              width={350}
-              height={660}
-              className="drop-shadow-[0_45px_60px_rgba(0,0,0,.30)]"
-            />
+            {/* Soft Frame Card */}
+            <div className="relative flex w-full items-center justify-center rounded-2xl border border-[rgba(20,32,24,0.08)] bg-white p-8 shadow-sm sm:p-12">
+              <div className="absolute h-48 w-48 rounded-full bg-[#F5EFEB] blur-2xl" />
+
+              <motion.div
+                animate={{ y: [0, -6, 0] }}
+                transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+                className="relative z-10"
+              >
+                <Image
+                  src="/images/hero/millet-us-bottle.png"
+                  alt="Millet-Us Premium Sweetener"
+                  width={280}
+                  height={460}
+                  priority
+                  className="h-auto w-44 object-contain drop-shadow-md sm:w-56"
+                />
+              </motion.div>
+            </div>
+
+            {/* Guarantees */}
+            <div className="mt-4 flex items-center justify-center gap-6 text-[11px] text-[#6D776F]">
+              <div className="flex items-center gap-1.5">
+                <Leaf className="h-3.5 w-3.5 text-[#96783E]" />
+                <span>100% Plant-Based</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Shield className="h-3.5 w-3.5 text-[#96783E]" />
+                <span>Quality Certified</span>
+              </div>
+            </div>
           </motion.div>
 
-          {/* Floating Tags */}
-          <div className="absolute left-0 top-60 rounded-full bg-white px-5 py-3 shadow-xl">
-            🌿 Low GI
-          </div>
+          {/* RIGHT: EDITORIAL COPY (7 COLS) */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="lg:col-span-7 flex flex-col items-start"
+          >
+            {/* Tag */}
+            <div className="inline-flex items-center gap-2 rounded-full border border-[rgba(150,120,62,0.2)] bg-[#F5EFEB] px-3.5 py-1 text-[10px] font-bold tracking-[0.2em] text-[#96783E] uppercase">
+              <Sparkles className="h-3 w-3 text-[#96783E]" />
+              Flagship Product
+            </div>
 
-          <div className="absolute right-0 top-60 rounded-full bg-white px-5 py-3 shadow-xl">
-            🌾 Millet Powered
-          </div>
+            {/* Title */}
+            <h2 className="mt-4 font-serif text-3xl font-medium tracking-tight text-[#071A11] sm:text-4xl md:text-5xl">
+              Millet-Us <br />
+              <span className="italic text-[#96783E]">Sweetener.</span>
+            </h2>
 
-          <div className="absolute left-0 bottom-60 rounded-full bg-white px-5 py-3 shadow-xl">
-            ❤️ Better Health
-          </div>
+            <p className="mt-3 text-xs leading-relaxed text-[#6D776F] sm:text-sm">
+              The world&apos;s first millet-based sweetener designed to deliver clean, balanced sweetness while supporting climate-smart farming and sustainable agriculture.
+            </p>
 
-          <div className="absolute bottom-60 right-0 rounded-full bg-white px-5 py-3 shadow-xl">
-            🌍 Sustainable
-          </div>
-        </motion.div>
+            {/* Feature Set */}
+            <div className="mt-6 w-full space-y-3.5 border-y border-[rgba(20,32,24,0.08)] py-5">
+              {FEATURES.map((feature) => (
+                <div key={feature.title} className="flex items-start gap-3">
+                  <div className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#143B27] text-white">
+                    <Check className="h-2.5 w-2.5" />
+                  </div>
+                  <div>
+                    <h3 className="text-xs font-semibold text-[#142018] sm:text-sm">
+                      {feature.title}
+                    </h3>
+                    <p className="text-[11px] text-[#6D776F]">
+                      {feature.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Amazon Redirect Link */}
+            <div className="mt-6">
+              <a
+                href={AMAZON_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-2 rounded-lg bg-[#071A11] px-7 py-3.5 text-xs font-bold uppercase tracking-wider text-white shadow-sm transition-all hover:bg-[#143B27]"
+              >
+                <span>Buy on Amazon</span>
+                <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
+            </div>
+
+          </motion.div>
+
+        </div>
       </div>
-
-      {/* Bottom */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        className="mt-24 text-center"
-      >
-        <p className="text-2xl text-[#C8A95C]">★★★★★</p>
-
-        <p className="mt-3 text-gray-600">
-          Innovating healthier sweetness through millet-powered food technology.
-        </p>
-      </motion.div>
     </section>
   );
 }

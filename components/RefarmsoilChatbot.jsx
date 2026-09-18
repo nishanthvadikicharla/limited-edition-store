@@ -12,10 +12,13 @@ Key facts you know:
 - Millets are climate-resilient, nutrient-dense, and require far less water than rice or wheat.
 - Millet-Us is a healthier alternative to refined sugar — low glycemic index, rich in fibre and minerals.
 - Refarmsoil works directly with farmers in Telangana to source millets sustainably.
-- WhatsApp contact is available for bulk/B2B queries.
+- WhatsApp: +91 8328379902
+- Email: business@refarmsoil.com
+- Amazon Store: https://www.amazon.in/Refarmsoil-Millet-Us-Worlds-Sweetener-Glycemic/dp/B0GZFDLNVP/ref=sr_1_5?crid=3M3M2CBTHDKQB&dib=eyJ2IjoiMSJ9.ieisxWVw5vKTQ4a2QbiiwgdeiMaI7n53UgttxmDxyrw.YjKPtvBRnhXPmjzLeOg9vpgTW4ZNpwenBSU3fuvrkJk&dib_tag=se&keywords=milletus&qid=1782185476&sprefix=milletus%2Caps%2C326&sr=8-5
 - Website: refarmsoil.com
 
-Answer questions about the brand, products, millets, sustainability, nutrition, and ordering. For complex B2B or investor queries, suggest they reach out via WhatsApp or email. Keep answers concise (2–4 sentences usually), friendly, and on-brand. If someone asks something outside your scope, gently redirect to Refarmsoil topics.`;
+Answer questions about the brand, products, millets, sustainability, nutrition, and ordering. For complex B2B or investor queries, suggest they reach out via WhatsApp or email. Keep answers concise (2–4 sentences usually), friendly, and on-brand. If someone asks something outside your scope, gently redirect to Refarmsoil topics.`
+;
 
 const BOT_AVATAR = "🌾";
 const USER_AVATAR = "🧑";
@@ -56,12 +59,22 @@ export default function RefarmsoilChatbot() {
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const bottomRef = useRef(null);
 
-  useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, loading]);
+  const firstLoad = useRef(true);
+
+useEffect(() => {
+  if (firstLoad.current) {
+    firstLoad.current = false;
+    return;
+  }
+
+  bottomRef.current?.scrollIntoView({
+    behavior: "smooth",
+    block: "end",
+  });
+}, [messages, loading]);
 
   const sendMessage = async (text) => {
     const userText = text || input.trim();
@@ -146,7 +159,14 @@ setMessages((prev) => [
 
   if (!open) {
     return (
-      <div style={{ display: "flex", justifyContent: "flex-end", padding: 24, minHeight: "100vh", alignItems: "flex-end", background: "#f5f2eb" }}>
+      <div
+  style={{
+    position: "fixed",
+    bottom: 20,
+    right: 20,
+    zIndex: 9999,
+  }}
+>
         <button
           onClick={() => setOpen(true)}
           style={{
@@ -185,15 +205,19 @@ setMessages((prev) => [
         ::-webkit-scrollbar-thumb { background: #c8d9b0; border-radius: 4px; }
       `}</style>
 
-      <div style={{
-        display: "flex", justifyContent: "center", alignItems: "center",
-        minHeight: "100vh", background: "#f5f2eb", padding: 16,
-      }}>
+      <div
+  style={{
+    position: "fixed",
+    bottom: 20,
+    right: 20,
+    zIndex: 9999,
+  }}
+>
         <div style={{
-          width: "100%", maxWidth: 420,
+          width: "100%",width: "calc(100vw - 32px)", maxWidth: 420,
           borderRadius: 20, overflow: "hidden",
           boxShadow: "0 20px 60px rgba(0,0,0,0.15)",
-          display: "flex", flexDirection: "column", height: 620,
+          display: "flex", flexDirection: "column", height: "80vh",maxheight: 500,maxwidth: 380,
           border: "1px solid #dde8cc",
         }}>
 

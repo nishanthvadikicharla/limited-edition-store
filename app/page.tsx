@@ -1,43 +1,38 @@
+"use client";
+
+import { useState } from "react";
 import Navbar from "@/components/home/Navbar";
 import Hero from "@/components/home/Hero";
-import About from "@/components/home/About";
-import SmoothScroll from "@/components/home/SmoothScroll";
+import Products from "@/components/home/Products";
 import Technology from "@/components/home/Technology";
-import Awards from "@/components/home/Awards";
-import Impact from "@/components/home/Impact";
-import CTA from "@/components/home/CTA";
-import Reviews from "@/components/home/Reviews";
+import About from "@/components/home/About";
+import RefarmsoilSystem from "@/components/home/RefarmsoilSystem";
+
 import Footer from "@/components/home/Footer";
-import Vision from "@/components/home/Vision";
-import Founders from "@/components/home/Founders";
-import Problemsolution from "@/components/home/Problemsolution";
-import Originstory from "@/components/home/Originstory";
-import Marketopportunity from "@/components/home/Marketopportunity";
-import WhyMillets from "@/components/home/WhyMillets";
+
+export type TabType = "home" | "products" | "technology" | "about" | "contact";
 
 export default function Home() {
-  return (
-    <>
-      <SmoothScroll />
+  const [activeTab, setActiveTab] = useState<TabType>("home");
 
-      <main className="bg-[#F8F5EC]">
-        <Navbar />
-        <Hero />
-        <Problemsolution />
-        <About />
-        <Originstory />
-        <WhyMillets />
-        <Vision />
-        <Technology />
-        <Marketopportunity />
-        <Awards />
-        <Impact />
-        <Reviews />
-        <CTA />
-        <Founders />
-        
-        <Footer />
-      </main>
-    </>
+  return (
+    <main className="min-h-screen bg-[#071A11] text-white">
+      {/* Navbar with tab switching */}
+      <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
+
+      {/* Show ONLY the selected tab content */}
+      <div className="pt-20">
+        {activeTab === "home" && <Hero setActiveTab={setActiveTab} />}
+        {activeTab === "products" && <Products />}
+        {activeTab === "technology" && <Technology />}
+        {activeTab === "about" && <About />}
+        {activeTab === "refarmsoilsystem" && <RefarmsoilSystem />}
+
+
+      </div>
+
+      {/* Footer remains visible on all tabs */}
+      <Footer />
+    </main>
   );
 }

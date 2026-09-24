@@ -151,7 +151,7 @@ export default function Founders() {
 
           <h3 className="mx-auto mt-4 max-w-3xl text-xl font-semibold italic leading-relaxed text-green-50 sm:mt-6 sm:text-2xl md:text-3xl">
             &ldquo;We are not just building products. We are building a
-            sustainable food future.&rdquo;
+          Millet powered food Ecosystem.&rdquo;
           </h3>
 
           <p className="mt-4 text-sm text-green-200 sm:mt-5 sm:text-base">

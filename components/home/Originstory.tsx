@@ -1,21 +1,28 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
-import { Heart, Users2, Globe2 } from "lucide-react";
+import { Heart, Users2, Leaf } from "lucide-react";
 
 const losses = [
   {
     icon: Heart,
+    iconBg: "#6b4c10",
+    iconColor: "#c8954a",
     title: "People",
     desc: "Losing health to sugar-driven lifestyles — rising obesity, diabetes, and sugar addiction starting younger every year.",
   },
   {
     icon: Users2,
+    iconBg: "#2a4a35",
+    iconColor: "#7aab8a",
     title: "Farmers",
     desc: "Losing hope to unsustainable crops — low returns from input-heavy sugarcane and rice, year after year.",
   },
   {
-    icon: Globe2,
+    icon: Leaf,
+    iconBg: "#1e3d35",
+    iconColor: "#5a9e8a",
     title: "The Planet",
     desc: "Losing resilience — degraded soils, over-extracted water, and rising agricultural emissions.",
   },
@@ -23,78 +30,94 @@ const losses = [
 
 export default function OriginStory() {
   return (
-    <section
-      id="origin"
-      className="relative overflow-hidden bg-white py-16 sm:py-20 md:py-28"
-    >
-      <div className="absolute -left-32 top-0 h-80 w-80 rounded-full bg-[#2F6F47]/10 blur-[150px] sm:h-96 sm:w-96" />
-      <div className="absolute -right-32 bottom-0 h-80 w-80 rounded-full bg-[#C8A95C]/15 blur-[160px] sm:h-96 sm:w-96" />
+    <section id="origin" className="relative min-h-screen overflow-hidden">
+      <Image
+        src="/images/origin/origin.jpg"
+        alt="Origin background"
+        fill
+        className="object-cover object-center"
+        priority
+      />
 
-      <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
+      {/* Overlay — left darker, right lighter to match reference */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30" />
+
+      <div className="relative z-10 mx-auto max-w-6xl px-6 py-20 sm:py-28">
+
+        {/* Eyebrow */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="text-center"
+          transition={{ duration: 0.6 }}
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#2F6F47] sm:text-sm sm:tracking-[0.35em]">
-            OUR ORIGIN STORY
-          </p>
+          <div className="flex items-center gap-3 mb-5">
+            <div className="h-px w-10 bg-[#C8A95C]" />
+            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#C8A95C]">
+              Our Origin Story
+            </p>
+          </div>
 
-          <h2 className="mt-4 text-3xl font-bold leading-tight text-[#183323] sm:mt-5 sm:text-5xl md:text-6xl">
+          {/* Heading */}
+          <h2 className="text-5xl font-bold leading-tight text-white sm:text-6xl md:text-7xl">
             It Started With
             <br />
-            One Conversation
+            <em className="font-serif font-normal italic text-white">
+              One Conversation
+            </em>
           </h2>
 
-          <div className="mx-auto mt-5 h-1 w-20 rounded-full bg-[#C8A95C] sm:mt-6 sm:w-28" />
-        </motion.div>
-
-        {/* Narrative */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.1 }}
-          className="mx-auto mt-10 max-w-3xl sm:mt-14"
-        >
-          <p className="text-lg leading-8 text-gray-700 sm:text-xl sm:leading-9">
-            It began with a simple but painful conversation — a mother
-            worried about her 7-year-old child&apos;s sugar addiction,
-            rising obesity, and health risks. At the same time, farmers
-            around us were struggling with low returns from input-heavy
-            crops like rice and sugarcane, while soils were degrading
-            under the burden of fertilisers, pesticides, and
-            water-intensive agriculture.
+          {/* Narrative */}
+          <p className="mt-8 max-w-lg text-sm leading-7 text-white/75 sm:text-base sm:leading-8">
+            It began with a simple but painful conversation — a mother worried
+            about her 7-year-old child&apos;s sugar addiction, rising obesity,
+            and health risks. At the same time, farmers around us were
+            struggling with low returns from input-heavy crops like rice and
+            sugarcane, while soils were degrading under the burden of
+            fertilisers, pesticides, and water-intensive agriculture.
           </p>
 
-          <p className="mt-6 text-base font-semibold uppercase tracking-widest text-[#2F6F47] sm:mt-8 sm:text-lg">
-            We saw a bigger pattern.
-          </p>
+          {/* We saw a bigger pattern */}
+          <div className="mt-6 flex items-center gap-3">
+            <div className="h-px w-10 bg-[#C8A95C]" />
+            <p className="font-serif text-lg italic text-white/85 sm:text-xl">
+              We saw a bigger pattern.
+            </p>
+          </div>
         </motion.div>
 
-        {/* Three losses */}
-        <div className="mt-10 grid grid-cols-1 gap-6 sm:mt-14 sm:grid-cols-3 sm:gap-8">
+        {/* Three Loss Cards */}
+        <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-3">
           {losses.map((loss, index) => {
             const Icon = loss.icon;
             return (
               <motion.div
                 key={loss.title}
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.12 }}
-                whileHover={{ y: -6 }}
-                className="rounded-2xl border border-[#E7E2D5] bg-[#F8F6EF] p-6 text-center sm:rounded-[24px] sm:p-8"
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                style={{ backgroundColor: "rgba(30, 35, 20, 0.82)" }}
+                className="rounded-2xl border border-white/10 p-7 sm:p-8"
               >
-                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-[#B5533C]/10 sm:h-14 sm:w-14">
-                  <Icon className="text-[#B5533C]" size={24} />
+                {/* Icon */}
+                <div
+                  className="flex h-14 w-14 items-center justify-center rounded-full mb-5"
+                  style={{ backgroundColor: loss.iconBg }}
+                >
+                  <Icon style={{ color: loss.iconColor }} size={24} />
                 </div>
-                <h3 className="mt-4 text-lg font-bold text-[#183323] sm:text-xl">
+
+                {/* Title */}
+                <h3 className="text-2xl font-serif font-semibold text-white mb-3">
                   {loss.title}
                 </h3>
-                <p className="mt-2 text-sm leading-6 text-gray-600 sm:text-base sm:leading-7">
+
+                {/* Gold line */}
+                <div className="h-0.5 w-8 bg-[#C8A95C] mb-4" />
+
+                {/* Description */}
+                <p className="text-sm leading-6 text-white/65 sm:text-base sm:leading-7">
                   {loss.desc}
                 </p>
               </motion.div>
@@ -102,48 +125,6 @@ export default function OriginStory() {
           })}
         </div>
 
-        {/* Resolution */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="mt-10 rounded-[24px] bg-[#183323] p-8 text-center text-white sm:mt-16 sm:rounded-[40px] sm:p-14"
-        >
-          <p className="text-xs uppercase tracking-[0.3em] text-[#CDEB8B] sm:text-sm sm:tracking-[0.4em]">
-            THAT&apos;S WHEN THE VISION WAS BORN
-          </p>
-
-          <h3 className="mx-auto mt-4 max-w-3xl text-xl font-semibold leading-relaxed sm:mt-6 sm:text-2xl md:text-3xl">
-            Not just an alternative to sugar — a millet-powered
-            solution that addresses people, farmers, and the planet,
-            together.
-          </h3>
-
-          <div className="mx-auto mt-8 grid max-w-2xl grid-cols-1 gap-4 text-left text-sm leading-6 text-white/80 sm:mt-10 sm:grid-cols-3 sm:gap-6 sm:text-base sm:leading-7">
-            <p>
-              <span className="font-semibold text-[#C8A95C]">
-                For people:
-              </span>{" "}
-              healthier, low-GI millet-based sugars, rich in antioxidants,
-              calcium, and iron.
-            </p>
-            <p>
-              <span className="font-semibold text-[#C8A95C]">
-                For farmers:
-              </span>{" "}
-              low-input, climate-resilient crops with multiplied ROI and
-              fair profits.
-            </p>
-            <p>
-              <span className="font-semibold text-[#C8A95C]">
-                For the planet:
-              </span>{" "}
-              less water, less fertiliser, fewer emissions, and
-              regenerated soils.
-            </p>
-          </div>
-        </motion.div>
       </div>
     </section>
   );

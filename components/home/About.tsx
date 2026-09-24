@@ -36,8 +36,20 @@ const PILLARS: PillarCard[] = [
 
 export default function About() {
   return (
-    <section id="about" className="bg-[#FAF9F6] py-20 text-[#142018] sm:py-28">
-      <div className="mx-auto max-w-6xl px-5 sm:px-6">
+    <section
+      id="about"
+      className="relative py-20 text-white sm:py-28"
+      style={{
+        backgroundImage: "url('/images/about/about.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
+      }}
+    >
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-black/65" />
+
+      <div className="relative z-10 mx-auto max-w-6xl px-5 sm:px-6">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -46,16 +58,16 @@ export default function About() {
           transition={{ duration: 0.6 }}
           className="flex flex-col items-center text-center"
         >
-          <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#96783E]">
+          <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#D5B66B]">
             Why Refarmsoil
           </span>
 
-          <h2 className="mt-3 font-serif text-3xl font-medium tracking-tight text-[#071A11] sm:text-4xl md:text-5xl">
+          <h2 className="mt-3 font-serif text-3xl font-medium tracking-tight text-white sm:text-4xl md:text-5xl">
             Building a Better Future <br className="hidden sm:inline" />
             Through Millet Innovation
           </h2>
 
-          <p className="mt-4 max-w-2xl text-xs leading-relaxed text-[#6D776F] sm:text-sm">
+          <p className="mt-4 max-w-2xl text-xs leading-relaxed text-[#E7E2D5] sm:text-sm">
             Refarmsoil is creating a climate-smart ecosystem where healthier food,
             prosperous farmers, and environmental sustainability grow together.
           </p>
@@ -70,11 +82,11 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.08, duration: 0.5 }}
-              className="group flex flex-col justify-between overflow-hidden rounded-xl border border-[rgba(20,32,24,0.08)] bg-white shadow-sm transition-all duration-300 hover:border-[#D5B66B]/40 hover:shadow-md"
+              className="group flex flex-col justify-between overflow-hidden rounded-xl border border-white/10 bg-white/10 backdrop-blur-sm shadow-sm transition-all duration-300 hover:border-[#D5B66B]/40 hover:shadow-md"
             >
               <div>
                 {/* Image Frame */}
-                <div className="relative h-48 w-full overflow-hidden bg-[#FAF9F6] sm:h-52">
+                <div className="relative h-48 w-full overflow-hidden sm:h-52">
                   <Image
                     src={card.image}
                     alt={card.title}
@@ -86,15 +98,15 @@ export default function About() {
 
                 {/* Content Body */}
                 <div className="p-6">
-                  <span className="text-[9px] font-bold tracking-widest text-[#96783E] uppercase">
+                  <span className="text-[9px] font-bold tracking-widest text-[#D5B66B] uppercase">
                     {card.tag}
                   </span>
 
-                  <h3 className="mt-2 text-lg font-serif font-medium text-[#071A11]">
+                  <h3 className="mt-2 text-lg font-serif font-medium text-white">
                     {card.title}
                   </h3>
 
-                  <p className="mt-2 text-xs leading-relaxed text-[#6D776F]">
+                  <p className="mt-2 text-xs leading-relaxed text-[#E7E2D5]">
                     {card.description}
                   </p>
                 </div>
@@ -109,7 +121,7 @@ export default function About() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="mt-12 rounded-2xl bg-[#071A11] p-8 sm:p-12 text-white shadow-md"
+          className="mt-12 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/10 p-8 sm:p-12 text-white shadow-md"
         >
           <div className="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-center">
             <div className="max-w-xl">

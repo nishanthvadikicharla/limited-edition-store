@@ -13,9 +13,8 @@ const WHATSAPP_LINK = "https://wa.me/918309607310";
 
 const quickLinks = [
   { label: "Home", href: "#home" },
-  { label: "Vision", href: "#vision" },
-  { label: "Mission", href: "#mission" },
-  { label: "Solution", href: "#solution" },
+  { label: "Vision", href: "#ecosystem" },
+  { label: "Technology", href: "#technology" },
   { label: "Awards", href: "#awards" },
   { label: "Reviews", href: "#reviews" },
   { label: "Contact", href: "#contact" },
@@ -44,8 +43,8 @@ export default function Footer() {
               <Image
                 src="/images/brand/refarmsoil-logo.png"
                 alt="RefarmSoil Logo"
-                width={84}
-                height={84}
+                width={50}
+                height={50}
                 className="h-18 w-18 object-contain"
              />
               <span className="text-2xl font-bold tracking-wide">
@@ -150,10 +149,7 @@ export default function Footer() {
                   business@refarmsoil.com
                 </a>
               </li>
-              <li className="flex items-center gap-3">
-                <Phone size={16} className="shrink-0 text-[#C8A95C]" />
-                
-              </li>
+              
             </ul>
           </motion.div>
         </div>

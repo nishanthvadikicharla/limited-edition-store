@@ -23,7 +23,7 @@ export default function Hero() {
       <div className="hero-content">
         <div className="hero-eyebrow">
           <span className="pulse-dot" />
-          MILLET-POWERED FOOD SYSTEMS
+          MILLET-POWERED FOOD ECOSYSTEM
         </div>
 
         <h1>
@@ -33,14 +33,14 @@ export default function Hero() {
         </h1>
 
         <p className="hero-copy">
-          Refarmsoil is building a millet-powered food platform that
+          Refarmsoil is building a millet-powered food ecosystem that
           connects resilient agriculture, food science and higher-value
           ingredients.
         </p>
 
         <div className="hero-actions">
           <a
-            href={AMAZON_URL}
+            href="https://www.amazon.in/Refarmsoil-Millet-Us-Worlds-Sweetener-Glycemic/dp/B0GZFDLNVP"
             target="_blank"
             rel="noopener noreferrer"
             className="btn btn-primary"
@@ -48,7 +48,10 @@ export default function Hero() {
             DISCOVER MILLET-US <span>↗</span>
           </a>
 
-          <a href="#platform" className="btn btn-secondary">
+          {/* Plain anchor for same-page scroll — next/link is for route
+              changes and can be unreliable for hash-only navigation when
+              you're already on this page. */}
+          <a href="#ecosystem" className="btn btn-secondary">
             EXPLORE REFARMSOIL <span>↓</span>
           </a>
         </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Star, ShieldCheck, ArrowUpRight } from "lucide-react";
+import { Star, ArrowUpRight, Truck, ShieldCheck } from "lucide-react";
 
 interface Review {
   name: string;
@@ -17,138 +17,152 @@ const REVIEWS: Review[] = [
     title: "Delightful, mindful sweetener",
     date: "21 May 2026",
     rating: 5,
-    text: "The taste is perfect: sweet with a pleasant, natural millet flavor that blends beautifully in tea, coffee and baking. The consistency is excellent too — it dissolves well and measures like regular sugar. The RefarmSoil concept is what sold it for me: a product made with care for soil health and small farmers.",
+    text: "Sweet with a pleasant, natural millet flavor. Blends beautifully in tea, coffee and baking.",
   },
   {
     name: "Blue Home",
-    title: "Good healthy alternative to sugar",
+    title: "Good healthy alternative",
     date: "20 May 2026",
     rating: 5,
-    text: "Taste is somewhat like jaggery and not like artificial sweeteners. We tried it in tea and it blended nicely. I really liked the idea of making sweetener from millets, very innovative. The save-soil message on the bottle is a good concept too.",
+    text: "Tastes somewhat like jaggery, not like artificial sweeteners. Blended nicely in tea.",
   },
   {
     name: "Sai Praneeth Narisetty",
-    title: "A truly innovative & healthier sugar alternative",
+    title: "Truly innovative & healthier",
     date: "23 May 2026",
     rating: 5,
-    text: "Really impressed with Refarmsoil Millet-Us! Tastes close to regular sugar with no bitter aftertaste and works perfectly in tea and coffee. Loved the natural millet-based, low glycemic formula with no artificial sweeteners.",
+    text: "Close to regular sugar with no bitter aftertaste. Works perfectly in tea and coffee.",
   },
   {
     name: "Kindle Customer",
-    title: "Perfect healthy sugar swap, zero blood sugar spikes",
-    date: "17 June 2026",
+    title: "Zero blood sugar spikes",
+    date: "17 Jun 2026",
     rating: 5,
-    text: "I bought Millet-Us strictly for health reasons, looking for a way to cut down on refined sugar without resorting to chemical artificial sweeteners. I am incredibly impressed — it behaves exactly like regular sugar but gives steady energy without the typical spikes.",
+    text: "Behaves exactly like regular sugar but gives steady energy without the typical spikes.",
   },
   {
     name: "Majoju Murali Krishna",
-    title: "Organic, value for money, healthy",
-    date: "8 June 2026",
+    title: "Organic, value for money",
+    date: "8 Jun 2026",
     rating: 5,
-    text: "I highly recommend this product. It surely offers great value for money and is a healthy, organic choice one must invest into.",
+    text: "Great value for money and a healthy, organic choice one must invest into.",
   },
   {
     name: "Pramod",
     title: "Best sweetener",
     date: "30 May 2026",
     rating: 5,
-    text: "Best sweetener extracted from a crop that saves water and protects the soil. Derived from millets and a healthy option — everyone can use it.",
+    text: "Extracted from a crop that saves water and protects the soil. A healthy option for everyone.",
   },
 ];
 
 const AMAZON_URL =
   "https://www.amazon.in/Refarmsoil-Millet-Us-Worlds-Sweetener-Glycemic/dp/B0GZFDLNVP";
 
+function initials(name: string) {
+  return name
+    .split(" ")
+    .map((w) => w[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+}
+
 export default function Reviews() {
   return (
-    <section id="reviews" className="bg-[#FAF9F6] py-24 text-[#142018]">
-      <div className="mx-auto max-w-6xl px-6">
-        {/* Header */}
+    <section id="reviews" className="bg-[#071A11] py-10 text-[#F8F6EF] sm:py-12">
+      <div className="mx-auto max-w-7xl px-6 sm:px-8">
+        {/* Slim header row — everything on one line at desktop width */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="flex flex-col items-center text-center"
+          transition={{ duration: 0.5 }}
+          className="flex flex-wrap items-end justify-between gap-4"
         >
-          <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#96783E]">
-            Customer Voices
-          </span>
+          <div>
+            <p className="text-xs text-[#C8A95C]">Customer voices</p>
+            <h2 className="mt-1 font-serif text-2xl font-medium tracking-tight sm:text-[1.7rem]">
+              Real stories. <span className="italic text-[#C8A95C]">Lasting impact.</span>
+            </h2>
+          </div>
 
-          <h2 className="mt-3 font-serif text-3xl font-medium tracking-tight sm:text-4xl">
-            Loved by Amazon Customers
-          </h2>
-
-          <div className="mt-4 flex items-center gap-2 text-xs text-[#6D776F]">
-            <div className="flex text-[#D5B66B]">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="h-3.5 w-3.5 fill-current" />
-              ))}
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+            <div className="flex items-center gap-2 text-xs text-[#F8F6EF]/60">
+              <div className="flex text-[#C8A95C]">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="h-3.5 w-3.5 fill-current" />
+                ))}
+              </div>
+              <span className="font-medium text-[#F8F6EF]">5.0 / 5.0</span>
+              <span aria-hidden="true">·</span>
+              <span>Verified purchases</span>
             </div>
-            <span className="font-semibold text-[#142018]">5.0 / 5.0</span>
-            <span>•</span>
-            <span>Verified Purchases</span>
+
+            <a
+              href={AMAZON_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-1.5 rounded-full bg-[#C8A95C] px-5 py-2.5 text-xs font-medium text-[#14261C] transition-colors hover:bg-[#E4D3A4]"
+            >
+              Read all reviews on Amazon
+              <ArrowUpRight
+                className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                strokeWidth={1.75}
+              />
+            </a>
           </div>
         </motion.div>
 
-        {/* Reviews Grid */}
-        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {REVIEWS.map((review, index) => (
-            <motion.article
-              key={review.name + index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.05, duration: 0.5 }}
-              className="group flex flex-col justify-between rounded-xl border border-[rgba(20,32,24,0.08)] bg-white p-5 shadow-sm transition-all duration-300 hover:border-[#D5B66B]/40 hover:shadow-md"
+        {/* One short, wide row of all six reviews */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.5, delay: 0.08 }}
+          className="scrollbar-none mt-6 flex gap-3 overflow-x-auto"
+        >
+          {REVIEWS.map((review) => (
+            <article
+              key={review.name}
+              className="w-[240px] shrink-0 rounded-lg border border-white/8 bg-[#0E271B] p-3.5 sm:w-auto sm:flex-1"
             >
-              <div>
-                <div className="flex items-center justify-between">
-                  <div className="flex text-[#D5B66B]">
-                    {[...Array(review.rating)].map((_, i) => (
-                      <Star key={i} className="h-3 w-3 fill-current" />
-                    ))}
-                  </div>
-                  <ShieldCheck className="h-3.5 w-3.5 text-[#143B27]" />
-                </div>
-
-                <h3 className="mt-3 text-sm font-semibold tracking-tight text-[#142018]">
-                  {review.title}
-                </h3>
-
-                <p className="mt-2 line-clamp-4 text-xs leading-relaxed text-[#6D776F]">
-                  "{review.text}"
+              <div className="flex items-center gap-2">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/10 text-[9px] font-medium text-[#F8F6EF]/80">
+                  {initials(review.name)}
+                </span>
+                <p className="truncate text-[11px] font-medium text-[#F8F6EF]">
+                  {review.name}
                 </p>
               </div>
 
-              <div className="mt-5 flex items-center justify-between border-t border-[rgba(20,32,24,0.06)] pt-3 text-[10px]">
-                <span className="font-medium text-[#142018]">
-                  {review.name}
-                </span>
-                <span className="text-[#6D776F]">{review.date}</span>
+              <div className="mt-2 flex text-[#C8A95C]">
+                {[...Array(review.rating)].map((_, i) => (
+                  <Star key={i} className="h-2.5 w-2.5 fill-current" />
+                ))}
               </div>
-            </motion.article>
-          ))}
-        </div>
 
-        {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-          className="mt-12 text-center"
-        >
-          <a
-            href={AMAZON_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-full bg-[#071A11] px-6 py-3 text-[11px] font-bold uppercase tracking-widest text-white transition-all hover:bg-[#143B27]"
-          >
-            Read All Reviews on Amazon
-            <ArrowUpRight className="h-3.5 w-3.5" />
-          </a>
+              <h3 className="mt-2 text-xs font-medium leading-snug text-[#F8F6EF]">
+                {review.title}
+              </h3>
+              <p className="mt-1 line-clamp-2 text-[11px] leading-relaxed text-[#F8F6EF]/55">
+                {review.text}
+              </p>
+            </article>
+          ))}
         </motion.div>
+
+        {/* Trust marks */}
+        <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-white/8 pt-4">
+          <span className="flex items-center gap-1.5 text-xs text-[#F8F6EF]/55">
+            <Truck className="h-3.5 w-3.5 text-[#C8A95C]" strokeWidth={1.75} />
+            Express shipping
+          </span>
+          <span className="flex items-center gap-1.5 text-xs text-[#F8F6EF]/55">
+            <ShieldCheck className="h-3.5 w-3.5 text-[#C8A95C]" strokeWidth={1.75} />
+            
+          </span>
+        </div>
       </div>
     </section>
   );

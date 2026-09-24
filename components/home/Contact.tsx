@@ -49,10 +49,7 @@ export default function Contact() {
       `Message:\n${form.message}`
     );
 
-    // Open default mail application
     window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
-
-    // Close the modal window after sending
     setShowForm(false);
   };
 
@@ -122,10 +119,14 @@ export default function Contact() {
             {/* Ambient Modal Soft Glow */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-amber-100/40 rounded-full blur-3xl pointer-events-none" />
 
-            {/* Close Button */}
+            {/* Fixed Close Button */}
             <button 
-              className="absolute top-6 right-6 p-2 text-stone-500 hover:text-stone-900 rounded-full bg-stone-100 border border-stone-200 transition-colors"
-              onClick={() => setShowForm(false)}
+              type="button"
+              className="absolute top-6 right-6 p-2 text-stone-500 hover:text-stone-900 rounded-full bg-stone-100 border border-stone-200 transition-colors z-20 cursor-pointer"
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowForm(false);
+              }}
               aria-label="Close modal"
             >
               <X className="w-5 h-5" />

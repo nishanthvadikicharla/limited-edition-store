@@ -6,7 +6,7 @@ const AMAZON_URL = "https://www.amazon.in/s?k=Millet-Us+Sweetener";
 
 export default function Hero() {
   return (
-    <section id="top" className="hero">
+    <section id="hero" className="hero">
       <div className="hero-image">
         <Image
           src="/images/hero/millet-field.png"

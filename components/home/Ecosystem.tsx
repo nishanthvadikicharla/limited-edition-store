@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import {
   ChevronLeft,
   ChevronRight,
@@ -218,20 +217,7 @@ const CENTER = WHEEL_SIZE / 2;
 const OUTER_R = 292;
 const INNER_R = 112;
 
-// Fixed particle field (not Math.random() at render) so server and client
-// output match exactly — avoids a hydration mismatch.
-const PARTICLES = [
-  { left: 6, size: 4, duration: 14, delay: 0, hue: "#B99649" },
-  { left: 16, size: 3, duration: 16, delay: 3, hue: "#7A9B5C" },
-  { left: 28, size: 4, duration: 12.5, delay: 1.5, hue: "#397451" },
-  { left: 42, size: 3, duration: 15, delay: 5, hue: "#487153" },
-  { left: 58, size: 4, duration: 13, delay: 2, hue: "#B99649" },
-  { left: 72, size: 3, duration: 17, delay: 4.5, hue: "#397451" },
-  { left: 86, size: 4, duration: 14.5, delay: 1, hue: "#7A9B5C" },
-  { left: 94, size: 3, duration: 12, delay: 6, hue: "#487153" },
-];
-
-export default function Ecosystem() {
+export default function EcosystemPage() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [pulse, setPulse] = useState(0);
   const active = topics[activeIndex];
@@ -265,172 +251,105 @@ export default function Ecosystem() {
   const leftBenefits = active.benefits.slice(0, 3);
   const rightBenefits = active.benefits.slice(3, 6);
 
-  const handleWedgeKeyDown = (e: React.KeyboardEvent, i: number) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      setActiveIndex(i);
-    }
-  };
-
   return (
     <main
-      id="ecosystem"
-      className="relative flex h-[100dvh] min-h-[640px] w-full flex-col overflow-hidden"
+      id= "ecosystem"
+      className="relative min-h-screen w-full overflow-hidden"
       style={{
         background: `radial-gradient(circle at 12% 12%, rgba(205,220,180,0.34), transparent 32%), radial-gradient(circle at 88% 82%, rgba(205,185,135,0.22), transparent 34%), ${BG}`,
         color: INK,
-        ["--glow" as string]: active.color,
       }}
     >
+      {/* ambient rings */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute -right-40 -top-40 h-[520px] w-[520px] rounded-full" style={{ border: "1px solid rgba(23,61,45,0.05)" }} />
         <div className="absolute -left-32 bottom-0 h-[420px] w-[420px] rounded-full" style={{ border: "1px solid rgba(23,61,45,0.04)" }} />
       </div>
 
-      <svg aria-hidden="true" className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.03]">
-        <filter id="eco-grain">
-          <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" />
-        </filter>
-        <rect width="100%" height="100%" filter="url(#eco-grain)" />
-      </svg>
-
-      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-        {PARTICLES.map((p, i) => (
-          <span
-            key={i}
-            className="spore"
-            style={{
-              left: `${p.left}%`,
-              width: p.size,
-              height: p.size,
-              background: p.hue,
-              boxShadow: `0 0 ${p.size * 2}px ${p.size * 0.8}px ${p.hue}40`,
-              animationDuration: `${p.duration}s`,
-              animationDelay: `${p.delay}s`,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* HEADER — compact */}
-      <header className="relative z-20 mx-auto flex w-full max-w-[1500px] shrink-0 items-center justify-between px-6 py-3 md:px-10">
-        <div className="flex items-center gap-3">
-          <svg width="28" height="28" viewBox="0 0 42 42" fill="none">
+      {/* HEADER */}
+      <header className="relative z-20 mx-auto flex max-w-[1500px] items-center justify-between px-7 py-6 md:px-12">
+        <div className="flex items-center gap-4">
+          <svg width="38" height="38" viewBox="0 0 42 42" fill="none">
             <path d="M21 35V13" stroke={INK} strokeWidth="1.8" strokeLinecap="round" />
             <path d="M21 22C14 22 10 18 9 11C16 11 21 15 21 22Z" fill="#7A9B5C" />
             <path d="M21 28C28 28 32 24 33 17C26 17 21 21 21 28Z" fill="#527A48" />
           </svg>
           <div>
-            <div className="text-[15px] font-semibold leading-tight tracking-[-0.04em]" style={{ color: INK }}>ReFarmSoil</div>
-            <div className="text-[7px] font-medium uppercase tracking-[0.24em]" style={{ color: "rgba(23,61,45,0.45)" }}>
+            <div className="text-[20px] font-semibold tracking-[-0.04em]" style={{ color: INK }}>ReFarmSoil</div>
+            <div className="mt-0.5 text-[8px] font-medium uppercase tracking-[0.28em]" style={{ color: "rgba(23,61,45,0.45)" }}>
               Regenerate · Nourish · Sustain
             </div>
           </div>
         </div>
         <div className="hidden text-right md:block">
-          <div className="text-[10px] uppercase tracking-[0.16em]" style={{ color: "rgba(23,61,45,0.5)" }}>
+          <div className="text-[11px] uppercase tracking-[0.18em]" style={{ color: "rgba(23,61,45,0.5)" }}>
             Millet-Powered Global Food Ecosystem
           </div>
         </div>
       </header>
 
-      {/* STAGE — fills remaining height, content centered and compressed to fit */}
-      <motion.section
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-60px" }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className="relative z-10 mx-auto flex w-full max-w-[1500px] flex-1 flex-col justify-center overflow-hidden px-5 md:px-10"
-      >
+      {/* ORBIT STAGE */}
+      <section className="relative z-10 mx-auto max-w-[1500px] px-5 pb-8 md:px-10">
 
-        {/* TOP — compact title */}
+        {/* TOP — floating title */}
         <div
           key={`title-${pulse}`}
-          className="relative mx-auto max-w-xl shrink-0 text-center"
-          style={{ animation: "orbIn 500ms cubic-bezier(.2,.8,.2,1) both" }}
+          className="relative mx-auto max-w-2xl text-center"
+          style={{ animation: "orbIn 600ms cubic-bezier(.2,.8,.2,1) both" }}
         >
-          <div className="flex items-center justify-center gap-2">
-            <span className="h-px w-5" style={{ background: active.color }} />
-            <span className="text-[9px] font-bold uppercase tracking-[0.28em]" style={{ color: active.color }}>
+          <div className="flex items-center justify-center gap-3">
+            <span className="h-px w-8" style={{ background: active.color }} />
+            <span className="text-[10px] font-bold uppercase tracking-[0.3em]" style={{ color: active.color }}>
               {active.benefitsTitle}
             </span>
-            <span className="h-px w-5" style={{ background: active.color }} />
+            <span className="h-px w-8" style={{ background: active.color }} />
           </div>
-          <h1
-            className="title-glow mt-1.5 text-[24px] font-semibold leading-[1.05] tracking-[-0.04em] sm:text-[30px]"
-            style={{ color: INK }}
-          >
+          <h1 className="mt-4 text-[40px] font-semibold leading-[1.02] tracking-[-0.05em] sm:text-[54px]" style={{ color: INK }}>
             {active.title}
           </h1>
-          <p className="mt-1 text-[12px] font-medium italic" style={{ color: active.color }}>
+          <p className="mt-2 text-[15px] font-medium italic" style={{ color: active.color }}>
             {active.subtitle}
           </p>
-          <p className="mx-auto mt-1.5 max-w-md text-[12px] leading-[1.5]" style={{ color: "rgba(23,61,45,0.6)" }}>
+          <p className="mx-auto mt-5 max-w-xl text-[14px] leading-[1.85]" style={{ color: "rgba(23,61,45,0.62)" }}>
             {active.description}
           </p>
         </div>
 
-        {/* QUICK-NAV PILLS — compact */}
-        <div className="quick-nav-scroll mt-2.5 flex shrink-0 justify-start gap-1.5 overflow-x-auto pb-1 lg:justify-center">
-          {topics.map((topic, i) => {
-            const isActive = activeIndex === i;
-            const PIcon = topic.icon;
-            return (
-              <button
-                key={topic.id}
-                onClick={() => setActiveIndex(i)}
-                aria-pressed={isActive}
-                aria-label={`View ${topic.label}`}
-                className="flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full px-2.5 py-1 text-[9px] font-semibold uppercase tracking-wider transition-all duration-300"
-                style={{
-                  background: isActive ? topic.color : "rgba(255,255,255,0.6)",
-                  color: isActive ? "#fff" : "rgba(23,61,45,0.6)",
-                  border: `1px solid ${isActive ? topic.color : "rgba(23,61,45,0.1)"}`,
-                }}
-              >
-                <PIcon size={11} strokeWidth={2} />
-                {topic.shortLabel}
-              </button>
-            );
-          })}
-        </div>
+        {/* ORBIT GRID — left cards | wheel | right cards */}
+        <div className="mt-10 grid grid-cols-1 items-center gap-6 lg:grid-cols-[1fr_auto_1fr] lg:gap-4 xl:gap-10">
 
-        {/* ORBIT GRID — smaller wheel, tighter cards */}
-        <div className="mt-2 grid min-h-0 flex-1 grid-cols-1 items-center gap-3 lg:grid-cols-[1fr_auto_1fr] lg:gap-3 xl:gap-6">
-
-          <div className="hidden flex-col gap-2.5 lg:flex lg:items-end">
+          {/* LEFT ORBIT CARDS */}
+          <div className="flex flex-col gap-4 lg:items-end">
             {leftBenefits.map((benefit, i) => {
               const BIcon = benefit.icon;
               return (
                 <div
                   key={`${active.id}-L-${benefit.title}`}
-                  className="group relative flex w-full max-w-[260px] items-start gap-3 rounded-[14px] p-2.5 transition-all duration-300 hover:-translate-y-1 lg:text-right"
+                  className="group relative flex w-full max-w-[320px] items-start gap-4 rounded-[20px] p-4 transition-all duration-300 hover:-translate-y-1 lg:text-right"
                   style={{
                     background: "rgba(255,255,252,0.9)",
                     border: "1px solid rgba(23,61,45,0.07)",
-                    boxShadow: "0 8px 20px rgba(20,48,34,0.07)",
-                    animation: `orbInLeft 500ms cubic-bezier(.2,.8,.2,1) both`,
-                    animationDelay: `${100 + i * 90}ms`,
+                    boxShadow: "0 10px 30px rgba(20,48,34,0.07)",
+                    animation: `orbInLeft 600ms cubic-bezier(.2,.8,.2,1) both`,
+                    animationDelay: `${120 + i * 110}ms`,
                   }}
                 >
+                  {/* connector dash toward wheel */}
                   <span
-                    className="energy-line pointer-events-none absolute right-[-20px] top-1/2 hidden h-px w-5 lg:block"
-                    style={{
-                      background: `linear-gradient(90deg, transparent, ${active.color}, transparent)`,
-                      backgroundSize: "200% 100%",
-                    }}
+                    className="pointer-events-none absolute right-[-26px] top-1/2 hidden h-px w-6 lg:block"
+                    style={{ background: `linear-gradient(90deg, ${active.color}70, transparent)` }}
                   />
                   <div
-                    className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full transition-transform duration-300 group-hover:scale-110 lg:order-2"
+                    className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full transition-transform duration-300 group-hover:scale-110 lg:order-2"
                     style={{ background: active.bgColor }}
                   >
-                    <BIcon size={14} strokeWidth={1.8} style={{ color: active.color }} />
+                    <BIcon size={18} strokeWidth={1.8} style={{ color: active.color }} />
                   </div>
                   <div className="lg:order-1">
-                    <div className="text-[12px] font-bold leading-snug" style={{ color: INK }}>
+                    <div className="text-[14px] font-bold leading-snug" style={{ color: INK }}>
                       {benefit.title}
                     </div>
-                    <div className="mt-0.5 text-[10.5px] leading-[1.4]" style={{ color: "rgba(23,61,45,0.55)" }}>
+                    <div className="mt-1 text-[12px] leading-[1.6]" style={{ color: "rgba(23,61,45,0.55)" }}>
                       {benefit.desc}
                     </div>
                   </div>
@@ -439,16 +358,21 @@ export default function Ecosystem() {
             })}
           </div>
 
-          {/* WHEEL — significantly smaller so the row height drops */}
-          <div className="relative mx-auto" style={{ width: "min(48vw, 260px)", aspectRatio: "1 / 1" }}>
+          {/* WHEEL */}
+          <div className="relative mx-auto" style={{ width: "min(84vw, 430px)", aspectRatio: "1 / 1" }}>
             <div
               className="absolute inset-[8%] rounded-full"
-              style={{ background: "rgba(28,57,42,0.16)", filter: "blur(30px)", transform: "translateY(12px)" }}
+              style={{ background: "rgba(28,57,42,0.16)", filter: "blur(40px)", transform: "translateY(18px)" }}
             />
+
+            {/* pulsing halo on change */}
             <div
               key={`halo-${pulse}`}
               className="pointer-events-none absolute inset-0 rounded-full"
-              style={{ border: `2px solid ${active.color}`, animation: "haloPulse 900ms ease-out both" }}
+              style={{
+                border: `2px solid ${active.color}`,
+                animation: "haloPulse 900ms ease-out both",
+              }}
             />
 
             <svg viewBox={`0 0 ${WHEEL_SIZE} ${WHEEL_SIZE}`} className="relative z-10 h-full w-full overflow-visible">
@@ -474,17 +398,7 @@ export default function Ecosystem() {
               </defs>
 
               <circle cx={CENTER} cy={CENTER} r={OUTER_R + 8} fill="none" stroke="rgba(23,61,45,0.08)" strokeWidth="1" />
-              <circle
-                className="idle-spin"
-                cx={CENTER}
-                cy={CENTER}
-                r={OUTER_R + 18}
-                fill="none"
-                stroke="rgba(23,61,45,0.035)"
-                strokeWidth="1"
-                strokeDasharray="3 7"
-                style={{ transformOrigin: `${CENTER}px ${CENTER}px` }}
-              />
+              <circle cx={CENTER} cy={CENTER} r={OUTER_R + 18} fill="none" stroke="rgba(23,61,45,0.035)" strokeWidth="1" strokeDasharray="3 7" />
 
               {topics.map((topic, i) => {
                 const path = getWedgePath(i, OUTER_R, INNER_R);
@@ -497,12 +411,7 @@ export default function Ecosystem() {
                   <g
                     key={topic.id}
                     onClick={() => setActiveIndex(i)}
-                    onKeyDown={(e) => handleWedgeKeyDown(e, i)}
-                    role="button"
-                    tabIndex={0}
-                    aria-label={`View ${topic.label}`}
-                    aria-pressed={isActive}
-                    className="wedge-group cursor-pointer"
+                    className="cursor-pointer"
                     style={{
                       transformBox: "fill-box",
                       transformOrigin: "center",
@@ -521,23 +430,18 @@ export default function Ecosystem() {
                     />
                     <path d={path} fill="url(#photoShade)" />
                     <path
-                      className={isActive ? "wedge-color" : "wedge-color wedge-breathe"}
                       d={path}
                       fill={topic.color}
                       opacity={isActive ? 0.12 : 0.42}
-                      style={{ transition: "opacity 450ms ease", animationDelay: `${i * 0.45}s` }}
+                      style={{ transition: "opacity 450ms ease" }}
                     />
                     <path
-                      className="wedge-outline"
                       d={path}
                       fill="none"
                       stroke={isActive ? "rgba(255,255,255,0.98)" : "rgba(244,241,230,0.78)"}
                       strokeWidth={isActive ? 5 : 3}
-                      style={{ transition: "stroke-width 250ms ease, stroke 250ms ease" }}
+                      style={{ transition: "stroke-width 400ms ease" }}
                     />
-                    {isActive && (
-                      <circle className="icon-glow" cx={iconPoint.x} cy={iconPoint.y} r={30} fill="none" stroke="rgba(255,255,255,0.9)" strokeWidth="2" />
-                    )}
                     <circle
                       cx={iconPoint.x}
                       cy={iconPoint.y}
@@ -600,39 +504,37 @@ export default function Ecosystem() {
             </svg>
           </div>
 
-          <div className="hidden flex-col gap-2.5 lg:flex lg:items-start">
+          {/* RIGHT ORBIT CARDS */}
+          <div className="flex flex-col gap-4 lg:items-start">
             {rightBenefits.map((benefit, i) => {
               const BIcon = benefit.icon;
               return (
                 <div
                   key={`${active.id}-R-${benefit.title}`}
-                  className="group relative flex w-full max-w-[260px] items-start gap-3 rounded-[14px] p-2.5 transition-all duration-300 hover:-translate-y-1"
+                  className="group relative flex w-full max-w-[320px] items-start gap-4 rounded-[20px] p-4 transition-all duration-300 hover:-translate-y-1"
                   style={{
                     background: "rgba(255,255,252,0.9)",
                     border: "1px solid rgba(23,61,45,0.07)",
-                    boxShadow: "0 8px 20px rgba(20,48,34,0.07)",
-                    animation: `orbInRight 500ms cubic-bezier(.2,.8,.2,1) both`,
-                    animationDelay: `${100 + i * 90}ms`,
+                    boxShadow: "0 10px 30px rgba(20,48,34,0.07)",
+                    animation: `orbInRight 600ms cubic-bezier(.2,.8,.2,1) both`,
+                    animationDelay: `${120 + i * 110}ms`,
                   }}
                 >
                   <span
-                    className="energy-line energy-line-reverse pointer-events-none absolute left-[-20px] top-1/2 hidden h-px w-5 lg:block"
-                    style={{
-                      background: `linear-gradient(270deg, transparent, ${active.color}, transparent)`,
-                      backgroundSize: "200% 100%",
-                    }}
+                    className="pointer-events-none absolute left-[-26px] top-1/2 hidden h-px w-6 lg:block"
+                    style={{ background: `linear-gradient(270deg, ${active.color}70, transparent)` }}
                   />
                   <div
-                    className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full transition-transform duration-300 group-hover:scale-110"
+                    className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full transition-transform duration-300 group-hover:scale-110"
                     style={{ background: active.bgColor }}
                   >
-                    <BIcon size={14} strokeWidth={1.8} style={{ color: active.color }} />
+                    <BIcon size={18} strokeWidth={1.8} style={{ color: active.color }} />
                   </div>
                   <div>
-                    <div className="text-[12px] font-bold leading-snug" style={{ color: INK }}>
+                    <div className="text-[14px] font-bold leading-snug" style={{ color: INK }}>
                       {benefit.title}
                     </div>
-                    <div className="mt-0.5 text-[10.5px] leading-[1.4]" style={{ color: "rgba(23,61,45,0.55)" }}>
+                    <div className="mt-1 text-[12px] leading-[1.6]" style={{ color: "rgba(23,61,45,0.55)" }}>
                       {benefit.desc}
                     </div>
                   </div>
@@ -642,194 +544,104 @@ export default function Ecosystem() {
           </div>
         </div>
 
-        {/* BENEFITS STRIP — the mobile/tablet stand-in for the side cards.
-            Below `lg` the two card columns are hidden (no room for a 3-up
-            layout within one screen), so this keeps the same 6 benefits
-            visible as compact chips instead of dropping them entirely. */}
-        <div className="quick-nav-scroll mt-2 flex shrink-0 justify-start gap-1.5 overflow-x-auto pb-1 lg:hidden">
-          {[...leftBenefits, ...rightBenefits].map((benefit) => {
-            const BIcon = benefit.icon;
-            return (
-              <span
-                key={benefit.title}
-                className="flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-medium"
+        {/* CONTROLS */}
+        <div className="mt-10 flex items-center justify-center gap-6">
+          <button
+            onClick={prev}
+            aria-label="Previous topic"
+            className="flex h-11 w-11 items-center justify-center rounded-full transition-all duration-300 hover:-translate-x-0.5"
+            style={{ border: "1px solid rgba(23,61,45,0.12)", background: "rgba(255,255,255,0.65)" }}
+          >
+            <ChevronLeft size={17} style={{ color: INK }} />
+          </button>
+
+          <div className="flex items-center gap-2">
+            {topics.map((topic, i) => (
+              <button
+                key={topic.id}
+                onClick={() => setActiveIndex(i)}
+                aria-label={`Open ${topic.label}`}
+                className="transition-all duration-300"
                 style={{
-                  background: "rgba(255,255,255,0.75)",
-                  border: "1px solid rgba(23,61,45,0.08)",
-                  color: INK,
+                  width: activeIndex === i ? 30 : 7,
+                  height: 7,
+                  borderRadius: 99,
+                  background: activeIndex === i ? topic.color : "rgba(23,61,45,0.13)",
                 }}
-              >
-                <BIcon size={11} strokeWidth={1.8} style={{ color: active.color }} />
-                {benefit.title}
-              </span>
-            );
-          })}
-        </div>
-
-        {/* CONTROLS — compact, with counter */}
-        <div className="mt-2 flex shrink-0 flex-col items-center gap-1.5">
-          <div className="flex items-center gap-4">
-            <button
-              onClick={prev}
-              aria-label="Previous topic"
-              className="flex h-8 w-8 items-center justify-center rounded-full transition-all duration-300 hover:-translate-x-0.5 active:scale-90"
-              style={{ border: "1px solid rgba(23,61,45,0.12)", background: "rgba(255,255,255,0.65)" }}
-            >
-              <ChevronLeft size={14} style={{ color: INK }} />
-            </button>
-
-            <div className="flex items-center gap-1.5">
-              {topics.map((topic, i) => (
-                <button
-                  key={topic.id}
-                  onClick={() => setActiveIndex(i)}
-                  aria-label={`Open ${topic.label}`}
-                  className="transition-all duration-300 active:scale-90"
-                  style={{
-                    width: activeIndex === i ? 24 : 6,
-                    height: 6,
-                    borderRadius: 99,
-                    background: activeIndex === i ? topic.color : "rgba(23,61,45,0.13)",
-                  }}
-                />
-              ))}
-            </div>
-
-            <button
-              onClick={next}
-              aria-label="Next topic"
-              className="flex h-8 w-8 items-center justify-center rounded-full transition-all duration-300 hover:translate-x-0.5 active:scale-90"
-              style={{ background: active.color, boxShadow: `0 6px 16px ${active.color}45` }}
-            >
-              <ChevronRight size={14} color="#fff" />
-            </button>
+              />
+            ))}
           </div>
-          <span className="text-[9px] tabular-nums tracking-widest" style={{ color: "rgba(23,61,45,0.4)" }}>
-            0{activeIndex + 1} / 0{topics.length}
-          </span>
+
+          <button
+            onClick={next}
+            aria-label="Next topic"
+            className="flex h-11 w-11 items-center justify-center rounded-full transition-all duration-300 hover:translate-x-0.5"
+            style={{ background: active.color, boxShadow: `0 8px 22px ${active.color}45` }}
+          >
+            <ChevronRight size={17} color="#fff" />
+          </button>
         </div>
 
-        {/* BIGGER PICTURE — compact single-line-friendly card, hidden on very short viewports */}
+        {/* BIGGER PICTURE — floating below */}
         <div
           key={`bp-${pulse}`}
-          className="relative mx-auto mt-2 hidden w-full max-w-2xl shrink-0 overflow-hidden rounded-[16px] p-3.5 sm:block"
+          className="relative mx-auto mt-10 max-w-3xl overflow-hidden rounded-[26px] p-7 md:p-9"
           style={{
             background: `linear-gradient(135deg, ${active.bgColor} 0%, rgba(255,255,255,0.55) 100%)`,
             border: `1px solid ${active.color}22`,
-            boxShadow: "0 12px 30px -18px rgba(20,48,34,0.25)",
-            animation: "orbInUp 550ms cubic-bezier(.2,.8,.2,1) both",
-            animationDelay: "220ms",
+            animation: "orbInUp 650ms cubic-bezier(.2,.8,.2,1) both",
+            animationDelay: "260ms",
           }}
         >
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute -left-0.5 -top-2 select-none font-serif text-[54px] leading-none"
-            style={{ color: active.color, opacity: 0.12 }}
-          >
-            &ldquo;
-          </span>
-          <div className="relative flex items-center gap-3">
+          <div className="pointer-events-none absolute -right-12 -top-12 h-44 w-44 rounded-full" style={{ border: `1px solid ${active.color}25` }} />
+          <div className="relative flex flex-col items-start gap-5 md:flex-row md:items-center">
             <div
-              className="gentle-float flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full"
-              style={{ background: "rgba(255,255,255,0.7)", border: `1px solid ${active.color}35` }}
+              className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full"
+              style={{ background: "rgba(255,255,255,0.65)", border: `1px solid ${active.color}35` }}
             >
-              <active.icon size={14} style={{ color: active.color }} />
+              <active.icon size={19} style={{ color: active.color }} />
             </div>
-            <p className="text-[11.5px] leading-[1.4]" style={{ color: "rgba(23,61,45,0.72)" }}>
-              {active.biggerPicture}
-            </p>
+            <div className="flex-1">
+              <div className="text-[10px] font-bold uppercase tracking-[0.22em]" style={{ color: active.color }}>
+                The Bigger Picture
+              </div>
+              <p className="mt-2 text-[15px] leading-[1.8]" style={{ color: "rgba(23,61,45,0.7)" }}>
+                {active.biggerPicture}
+              </p>
+            </div>
           </div>
         </div>
-      </motion.section>
+
+        {/* tagline */}
+        <div className="mt-12 flex flex-col items-center pb-14">
+          <p className="font-serif text-[19px] italic" style={{ color: "rgba(23,61,45,0.3)" }}>
+            Good food for a brighter future
+          </p>
+          <div className="mt-3 h-px w-24" style={{ background: "linear-gradient(90deg, transparent, #B99649, transparent)" }} />
+        </div>
+      </section>
 
       <style jsx>{`
         @keyframes orbIn {
-          from { opacity: 0; transform: translateY(-10px); }
+          from { opacity: 0; transform: translateY(-12px); }
           to { opacity: 1; transform: translateY(0); }
         }
         @keyframes orbInLeft {
-          from { opacity: 0; transform: translateX(-24px) scale(0.96); }
+          from { opacity: 0; transform: translateX(-28px) scale(0.96); }
           to { opacity: 1; transform: translateX(0) scale(1); }
         }
         @keyframes orbInRight {
-          from { opacity: 0; transform: translateX(24px) scale(0.96); }
+          from { opacity: 0; transform: translateX(28px) scale(0.96); }
           to { opacity: 1; transform: translateX(0) scale(1); }
         }
         @keyframes orbInUp {
-          from { opacity: 0; transform: translateY(18px); }
+          from { opacity: 0; transform: translateY(24px); }
           to { opacity: 1; transform: translateY(0); }
         }
         @keyframes haloPulse {
           0% { opacity: 0.7; transform: scale(0.97); }
           100% { opacity: 0; transform: scale(1.12); }
         }
-        @keyframes spin360 {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        .idle-spin { animation: spin360 90s linear infinite; }
-        @keyframes iconGlowPulse {
-          0%, 100% { opacity: 0.2; r: 28; }
-          50% { opacity: 0.45; r: 32; }
-        }
-        .icon-glow {
-          animation: iconGlowPulse 2.6s ease-in-out infinite;
-          transform-box: fill-box;
-          transform-origin: center;
-        }
-        @keyframes gentleFloat {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-3px); }
-        }
-        .gentle-float { animation: gentleFloat 3.5s ease-in-out infinite; }
-        .wedge-group:hover .wedge-color,
-        .wedge-group:focus-visible .wedge-color { opacity: 0.24; }
-        .wedge-group:hover .wedge-outline,
-        .wedge-group:focus-visible .wedge-outline {
-          stroke: rgba(255, 255, 255, 0.9);
-          stroke-width: 4;
-        }
-        .wedge-group,
-        .wedge-group:focus,
-        .wedge-group:focus-visible,
-        .wedge-group:active {
-          outline: none !important;
-          box-shadow: none !important;
-          -webkit-tap-highlight-color: transparent;
-        }
-        @keyframes wedgeBreathe {
-          0%, 100% { opacity: 0.42; }
-          50% { opacity: 0.32; }
-        }
-        .wedge-breathe { animation: wedgeBreathe 3.2s ease-in-out infinite; }
-        @keyframes energyFlow {
-          0% { background-position: 200% 0; }
-          100% { background-position: -200% 0; }
-        }
-        .energy-line { animation: energyFlow 2.6s linear infinite; }
-        .energy-line-reverse { animation-direction: reverse; }
-        @keyframes titleGlow {
-          0%, 100% { text-shadow: 0 0 12px var(--glow, transparent), 0 0 2px rgba(0,0,0,0.05); }
-          50% { text-shadow: 0 0 20px var(--glow, transparent), 0 0 2px rgba(0,0,0,0.05); }
-        }
-        .title-glow { animation: titleGlow 3.6s ease-in-out infinite; }
-        @keyframes sporeDrift {
-          0% { transform: translateY(0) translateX(0); opacity: 0; }
-          10% { opacity: 0.5; }
-          50% { transform: translateY(-40vh) translateX(10px); opacity: 0.35; }
-          90% { opacity: 0.12; }
-          100% { transform: translateY(-85vh) translateX(-8px); opacity: 0; }
-        }
-        .spore {
-          position: absolute;
-          bottom: 0;
-          border-radius: 999px;
-          animation-name: sporeDrift;
-          animation-timing-function: ease-in-out;
-          animation-iteration-count: infinite;
-        }
-        .quick-nav-scroll::-webkit-scrollbar { display: none; }
-        .quick-nav-scroll { scrollbar-width: none; }
         @media (prefers-reduced-motion: reduce) {
           * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
         }

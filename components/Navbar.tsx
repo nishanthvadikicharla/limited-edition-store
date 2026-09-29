@@ -10,7 +10,7 @@ const navLinks = [
   { name: "Home", href: "#home" },
   { name: "Products", href: "#products" },
   { name: "Technology", href: "#technology" },
-  { name: "About", href: "#about" },
+  { name: "Ecosystem", href: "#ecosystem" },
   { name: "Contact", href: "#contact" },
 ];
 
@@ -27,7 +27,6 @@ export default function Navbar() {
     };
 
     window.addEventListener("scroll", handleScroll);
-
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -39,114 +38,104 @@ export default function Navbar() {
         transition={{ duration: 0.6 }}
         className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
           scrolled
-            ? "bg-white/80 backdrop-blur-xl shadow-lg"
+            ? "bg-white/85 backdrop-blur-xl shadow-sm border-b border-gray-100"
             : "bg-transparent"
         }`}
       >
-        {/* Responsive container */}
-        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12">
-          <div className="min-h-[72px] sm:min-h-[80px] lg:h-24 flex items-center justify-between gap-4">
+        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="h-20 flex items-center justify-between gap-4">
             
             {/* Logo */}
-            <Link
-              href="/"
-              className="flex items-center gap-2 sm:gap-3 shrink-0 cursor-pointer"
-            >
+            <Link href="/" className="flex items-center gap-3 shrink-0">
               <Image
                 src="/images/refarmsoil.png"
                 alt="Refarmsoil"
-                width={180}
-                height={180}
+                width={56}
+                height={56}
                 priority
-                className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-[72px] lg:h-[72px] object-contain"
+                className="w-12 h-12 object-contain"
               />
-
               <div className="hidden xs:block">
-                <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-[#214A35] leading-tight">
+                <h2 className="text-xl font-bold text-[#214A35] leading-tight tracking-tight">
                   Refarmsoil
                 </h2>
-
-                <p className="text-[9px] sm:text-[10px] md:text-xs text-gray-500 tracking-[1.5px] sm:tracking-[2px] uppercase whitespace-nowrap">
+                <p className="text-[10px] text-gray-500 tracking-[2px] uppercase font-medium">
                   Climate Smart Food
                 </p>
               </div>
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center gap-6 xl:gap-8 2xl:gap-10">
+            <nav className="hidden lg:flex items-center gap-8">
               {navLinks.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="relative font-medium text-sm xl:text-base text-gray-700 hover:text-[#214A35] transition cursor-pointer whitespace-nowrap"
+                  className="font-medium text-sm text-gray-700 hover:text-[#214A35] transition-colors whitespace-nowrap"
                 >
                   {item.name}
                 </Link>
               ))}
             </nav>
 
-            {/* Right - Buy Now */}
+            {/* Desktop Buy Now Button */}
             <div className="hidden lg:flex items-center shrink-0">
               <Link
                 href={AMAZON_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-[#214A35] hover:bg-[#183727] text-white px-5 xl:px-7 py-2.5 xl:py-3 rounded-full transition font-semibold text-sm xl:text-base cursor-pointer whitespace-nowrap"
+                className="bg-[#214A35] hover:bg-[#183727] text-white px-6 py-2.5 rounded-full font-semibold text-sm transition-all shadow-sm hover:shadow-md flex items-center justify-center whitespace-nowrap min-w-[110px]"
               >
                 Buy Now
               </Link>
             </div>
 
-            {/* Mobile Menu Button */}
+            {/* Mobile Menu Toggle */}
             <button
               type="button"
               aria-label={menuOpen ? "Close menu" : "Open menu"}
               aria-expanded={menuOpen}
               onClick={() => setMenuOpen(!menuOpen)}
-              className="lg:hidden flex items-center justify-center p-2 -mr-2 rounded-md cursor-pointer text-[#214A35] hover:bg-black/5 transition"
+              className="lg:hidden p-2 rounded-lg text-[#214A35] hover:bg-black/5 transition"
             >
-              {menuOpen ? (
-                <X className="w-7 h-7 sm:w-8 sm:h-8" />
-              ) : (
-                <Menu className="w-7 h-7 sm:w-8 sm:h-8" />
-              )}
+              {menuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
             </button>
           </div>
         </div>
       </motion.header>
 
-      {/* Mobile Menu */}
+      {/* Mobile Drawer */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, x: "100%" }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: "100%" }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 bg-[#F8F5EC] z-40 flex flex-col justify-center items-center px-6"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 bg-white z-40 pt-24 px-6 flex flex-col justify-between pb-12 lg:hidden"
           >
-            <div className="w-full max-w-sm flex flex-col items-center gap-7 sm:gap-8">
+            <div className="flex flex-col items-center gap-6">
               {navLinks.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
                   onClick={() => setMenuOpen(false)}
-                  className="text-2xl sm:text-3xl font-semibold text-[#214A35] cursor-pointer"
+                  className="text-2xl font-semibold text-[#214A35] hover:opacity-80 transition"
                 >
                   {item.name}
                 </Link>
               ))}
-
-              <Link
-                href={AMAZON_LINK}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setMenuOpen(false)}
-                className="mt-3 sm:mt-4 bg-[#214A35] text-white px-7 sm:px-8 py-3.5 sm:py-4 rounded-full cursor-pointer text-base sm:text-lg font-semibold"
-              >
-                Buy Now
-              </Link>
             </div>
+
+            <Link
+              href={AMAZON_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMenuOpen(false)}
+              className="w-full max-w-xs mx-auto bg-[#214A35] text-white py-3.5 rounded-full text-center font-semibold text-base shadow-md"
+            >
+              Buy Now
+            </Link>
           </motion.div>
         )}
       </AnimatePresence>

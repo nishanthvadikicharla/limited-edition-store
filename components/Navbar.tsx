@@ -27,6 +27,7 @@ export default function Navbar() {
     };
 
     window.addEventListener("scroll", handleScroll);
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -44,22 +45,28 @@ export default function Navbar() {
       >
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="h-20 flex items-center justify-between gap-4">
-            
-            {/* Logo */}
-            <Link href="/" className="flex items-center gap-3 shrink-0">
+
+            {/* Logo + Brand */}
+            <Link
+              href="/"
+              className="flex items-center gap-3 shrink-0"
+            >
               <Image
                 src="/images/refarmsoil.png"
                 alt="Refarmsoil"
-                width={56}
-                height={56}
+                width={110}
+                height={110}
                 priority
-                className="w-12 h-12 object-contain"
+                className="w-24 h-24 sm:w-20 sm:h-20 object-contain shrink-0"
               />
-              <div className="hidden xs:block">
-                <h2 className="text-xl font-bold text-[#214A35] leading-tight tracking-tight">
+
+              {/* Brand text — visible on ALL screen sizes */}
+              <div className="flex flex-col justify-center">
+                <h2 className="text-lg sm:text-xl font-bold text-[#214A35] leading-tight tracking-tight">
                   Refarmsoil
                 </h2>
-                <p className="text-[10px] text-gray-500 tracking-[2px] uppercase font-medium">
+
+                <p className="text-[8px] sm:text-[10px] text-gray-500 tracking-[1.5px] sm:tracking-[2px] uppercase font-medium whitespace-nowrap">
                   Climate Smart Food
                 </p>
               </div>
@@ -96,9 +103,13 @@ export default function Navbar() {
               aria-label={menuOpen ? "Close menu" : "Open menu"}
               aria-expanded={menuOpen}
               onClick={() => setMenuOpen(!menuOpen)}
-              className="lg:hidden p-2 rounded-lg text-[#214A35] hover:bg-black/5 transition"
+              className="lg:hidden p-2 rounded-lg text-[#214A35] hover:bg-black/5 transition shrink-0"
             >
-              {menuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
+              {menuOpen ? (
+                <X className="w-7 h-7" />
+              ) : (
+                <Menu className="w-7 h-7" />
+              )}
             </button>
           </div>
         </div>
